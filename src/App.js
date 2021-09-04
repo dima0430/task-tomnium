@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import dataJson from './data'
+import React from 'react'
+import List from './List'
+import Loader from 'react-loader-spinner'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import "./App.scss";
+
+export default function App() {
+	const [data,setData]=React.useState('')
+	const timeout=(time)=>{
+		return new Promise((resolve)=>{
+			setTimeout(()=>resolve(setData(dataJson)),time)}
+		)} 
+	React.useEffect(()=>
+		timeout(2000)
+	,[])
+	return (
+		<div className="App">
+			{data?
+			<List data={data}/>:
+			<div className='loader'>	
+				<Loader
+					type="TailSpin" 
+					color="#00BFFF" 
+					height={200} 
+					width={200}
+				/>
+			</div>	
+			} 
+		</div>
+	);
 }
-
-export default App;
